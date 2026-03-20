@@ -8,23 +8,22 @@ A single-page directory site cataloging immersive entertainment worldwide — es
 
 ## Tech
 
-- **Static HTML** — zero build step for the prototype; ships as a single file
+- **Static HTML** — zero build step; ships as a single file
 - **Client-side search & filtering** — instant, no server round-trips
 - **Dark theme** — theatrical aesthetic appropriate for the immersive entertainment industry
 - **Mobile-first** — touch-optimized tag scrolling, responsive grid, sticky search
 - **Wishlist** — localStorage-backed heart/save functionality
-- **Future: Astro** — when the data outgrows a single file, migrate to Astro SSG with YAML/JSON content files
+- **Hosted on Netlify** — auto-deploys from GitHub on every push
 
 ## Categories
 
 🎪 Amusements · 🔐 Escape Rooms · 🎭 Events · 🖼 Exhibits · ✦ Experiences · 🍸 Food & Drink · 🎮 Games · 👻 Haunts · 🎬 Shows · 🌙 Multi-Day · 🎢 Theme Park · 🥽 VR · 🎯 One-on-One
 
-## Deployment (Cloudflare Pages)
+## Deployment
 
-1. Connect this repo to [Cloudflare Pages](https://pages.cloudflare.com/)
-2. Build command: (none — static files)
-3. Output directory: `/`
-4. Custom domain: `certifiedimmersive.com`
+Hosted on [Netlify](https://app.netlify.com/projects/certified-immersive) with auto-deploy from this repo.
+
+Live at: https://certified-immersive.netlify.app
 
 ## License
 
