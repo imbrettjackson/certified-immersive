@@ -1,22 +1,248 @@
-<!-- Full source at: https://github.com/imbrettjackson/certified-immersive -->
-<!-- This is a placeholder - the full 44KB index.html needs to be uploaded via git CLI -->
-<!-- Run: git clone https://github.com/imbrettjackson/certified-immersive.git -->
-<!-- Then copy the downloaded index.html into the repo and push -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Certified Immersive — Upload Required</title>
-<style>body{font-family:system-ui;background:#0a0a12;color:#e4e4f0;display:flex;justify-content:center;align-items:center;min-height:100vh;text-align:center;padding:20px}h1{font-size:1.5rem}p{color:#8a8a9e;margin-top:12px}code{background:#1a1a28;padding:4px 8px;border-radius:4px;font-size:14px}</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Certified Immersive — The Directory of Immersive Experiences</title>
+<meta name="description" content="Discover rated immersive theater, escape rooms, haunts, VR experiences, theme parks, and location-based entertainment worldwide.">
+<meta property="og:title" content="Certified Immersive — The Directory of Immersive Experiences">
+<meta property="og:description" content="The curated directory of immersive attractions and location-based entertainment.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg-deep: #06060c; --bg-primary: #0a0a12; --bg-card: #101018; --bg-card-hover: #14141e;
+  --bg-input: #12121c; --bg-elevated: #1a1a28;
+  --bg-tag: rgba(124, 106, 255, 0.08); --bg-tag-hover: rgba(124, 106, 255, 0.15); --bg-tag-active: rgba(124, 106, 255, 0.25);
+  --text-primary: #e4e4f0; --text-secondary: #8a8a9e; --text-muted: #55556a;
+  --text-accent: #a78bfa; --text-accent-hover: #c4b5fd;
+  --accent: #7c3aed; --accent-glow: rgba(124, 58, 237, 0.3); --accent-subtle: rgba(124, 58, 237, 0.06);
+  --heart-color: #f43f5e; --heart-bg: rgba(244, 63, 94, 0.12);
+  --status-active: #34d399; --status-seasonal: #fbbf24; --status-upcoming: #60a5fa; --status-closed: #f87171;
+  --cat-amusements: #f59e0b; --cat-escape: #10b981; --cat-events: #8b5cf6; --cat-exhibits: #06b6d4;
+  --cat-experiences: #a78bfa; --cat-food: #f97316; --cat-games: #22d3ee; --cat-haunts: #ef4444;
+  --cat-shows: #ec4899; --cat-multiday: #6366f1; --cat-themepark: #14b8a6; --cat-vr: #3b82f6; --cat-oneone: #d946ef;
+  --border: rgba(255, 255, 255, 0.05); --border-hover: rgba(255, 255, 255, 0.1);
+  --radius-sm: 6px; --radius-md: 10px; --radius-lg: 14px; --radius-pill: 100px;
+  --font-display: 'Outfit', system-ui, sans-serif; --font-mono: 'JetBrains Mono', monospace;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+html { background: var(--bg-deep); color: var(--text-primary); font-family: var(--font-display); -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+body { min-height: 100vh; min-height: 100dvh; background: var(--bg-primary); overflow-x: hidden; }
+.ambient { position: fixed; top: 0; left: 0; right: 0; height: 60vh; background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(124, 58, 237, 0.08) 0%, transparent 70%); pointer-events: none; z-index: 0; }
+.container { max-width: 1240px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+header { padding: 48px 0 32px; text-align: center; }
+@media (max-width: 640px) { header { padding: 32px 0 24px; } }
+.logo-mark { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent), #a78bfa); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 0 24px var(--accent-glow); }
+h1 { font-size: clamp(1.75rem, 5vw, 2.5rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; background: linear-gradient(135deg, #e4e4f0 30%, #a78bfa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.subtitle { color: var(--text-secondary); font-size: 0.95rem; font-weight: 400; margin-top: 8px; letter-spacing: 0.01em; }
+.meta-line { color: var(--text-muted); font-size: 0.75rem; margin-top: 12px; font-family: var(--font-mono); }
+.search-wrap { position: sticky; top: 0; z-index: 100; padding: 12px 0; background: rgba(10, 10, 18, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s; }
+.search-wrap.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
+.search-inner { max-width: 1240px; margin: 0 auto; padding: 0 20px; display: flex; gap: 10px; align-items: center; }
+.search-box { flex: 1; position: relative; }
+.search-box svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; color: var(--text-muted); pointer-events: none; }
+.search-box input { width: 100%; height: 46px; padding: 0 42px 0 42px; background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius-md); color: var(--text-primary); font-family: var(--font-display); font-size: 15px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+.search-box input::placeholder { color: var(--text-muted); }
+.search-box input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+.search-clear { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; border: none; background: var(--bg-elevated); border-radius: 50%; cursor: pointer; display: none; align-items: center; justify-content: center; color: var(--text-secondary); font-size: 14px; line-height: 1; }
+.search-clear.visible { display: flex; }
+.sort-btns { display: flex; gap: 4px; flex-shrink: 0; }
+.sort-btn { height: 46px; padding: 0 14px; background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius-md); color: var(--text-secondary); font-family: var(--font-display); font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.sort-btn:hover { color: var(--text-primary); border-color: var(--border-hover); }
+.sort-btn.active { color: var(--text-accent); border-color: var(--accent); background: var(--accent-subtle); }
+.tag-bar { padding: 12px 0 4px; }
+.tag-bar-inner { max-width: 1240px; margin: 0 auto; padding: 0 20px; }
+.tag-scroll { display: flex; gap: 6px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 8px; scroll-snap-type: x proximity; }
+.tag-scroll::-webkit-scrollbar { display: none; }
+.tag-pill { flex-shrink: 0; padding: 6px 14px; border-radius: var(--radius-pill); font-size: 12.5px; font-weight: 500; cursor: pointer; transition: all 0.15s; border: 1px solid transparent; scroll-snap-align: start; user-select: none; -webkit-user-select: none; white-space: nowrap; }
+.tag-pill.category { background: var(--bg-tag); color: var(--text-secondary); }
+.tag-pill.category:hover { background: var(--bg-tag-hover); color: var(--text-primary); }
+.tag-pill.category.active { background: var(--bg-tag-active); color: var(--text-accent); border-color: rgba(124, 58, 237, 0.3); }
+.tag-pill.status { font-family: var(--font-mono); font-size: 11.5px; }
+.clear-filters { flex-shrink: 0; padding: 6px 14px; border-radius: var(--radius-pill); font-size: 12px; font-weight: 500; cursor: pointer; background: rgba(244, 63, 94, 0.1); color: #f87171; border: 1px solid rgba(244, 63, 94, 0.2); display: none; transition: all 0.15s; }
+.clear-filters.visible { display: flex; }
+.clear-filters:hover { background: rgba(244, 63, 94, 0.2); }
+.stats-bar { padding: 16px 0 8px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-muted); font-family: var(--font-mono); }
+.stats-bar .count { color: var(--text-secondary); }
+.stats-bar .wishlist-count { color: var(--heart-color); cursor: pointer; transition: opacity 0.15s; }
+.stats-bar .wishlist-count:hover { opacity: 0.8; }
+.section { margin-bottom: 40px; }
+.section-header { display: flex; align-items: center; gap: 10px; padding: 16px 0 12px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+.section-icon { font-size: 18px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-sm); flex-shrink: 0; }
+.section-title { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.01em; flex: 1; }
+.section-count { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); background: var(--bg-elevated); padding: 2px 8px; border-radius: var(--radius-pill); }
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 12px; }
+.card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; cursor: default; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; position: relative; contain: layout style paint; }
+.card:hover { border-color: var(--border-hover); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+.card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+.card-title { font-size: 15px; font-weight: 600; line-height: 1.3; flex: 1; }
+.card-title a { color: var(--text-primary); text-decoration: none; transition: color 0.15s; }
+.card-title a:hover { color: var(--text-accent-hover); }
+.card-title a::after { content: ' \2192'; color: var(--text-muted); font-weight: 300; transition: color 0.15s; }
+.card-title a:hover::after { color: var(--text-accent); }
+.heart-btn { width: 34px; height: 34px; border: none; background: transparent; cursor: pointer; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; color: var(--text-muted); font-size: 16px; }
+.heart-btn:hover { background: var(--heart-bg); color: var(--heart-color); }
+.heart-btn.hearted { color: var(--heart-color); animation: heartPop 0.35s ease; }
+@keyframes heartPop { 0% { transform: scale(1); } 30% { transform: scale(1.3); } 60% { transform: scale(0.9); } 100% { transform: scale(1); } }
+.card-desc { font-size: 13.5px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.card-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 12px; }
+.card-tag { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: var(--radius-pill); letter-spacing: 0.02em; }
+.card-meta { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted); flex-wrap: wrap; }
+.card-meta .divider { opacity: 0.3; }
+.card-rating { color: #fbbf24; font-weight: 600; }
+.card-price { font-family: var(--font-mono); font-size: 11px; }
+.card-status { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 7px; border-radius: var(--radius-sm); }
+.card-status.active { background: rgba(52, 211, 153, 0.1); color: var(--status-active); }
+.card-status.seasonal { background: rgba(251, 191, 36, 0.1); color: var(--status-seasonal); }
+.card-status.upcoming { background: rgba(96, 165, 250, 0.1); color: var(--status-upcoming); }
+.card-status.closed { background: rgba(248, 113, 113, 0.1); color: var(--status-closed); }
+.card-location { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.card-date { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.empty-state { text-align: center; padding: 80px 20px; color: var(--text-muted); }
+.empty-state .icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5; }
+.empty-state p { font-size: 15px; }
+footer { text-align: center; padding: 48px 20px; padding-bottom: calc(48px + var(--safe-bottom)); color: var(--text-muted); font-size: 12px; border-top: 1px solid var(--border); margin-top: 40px; }
+footer a { color: var(--text-secondary); text-decoration: none; }
+footer a:hover { color: var(--text-accent); }
+.wishlist-overlay { position: fixed; inset: 0; background: rgba(6, 6, 12, 0.8); backdrop-filter: blur(8px); z-index: 200; display: none; align-items: flex-end; justify-content: center; }
+.wishlist-overlay.open { display: flex; }
+.wishlist-panel { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg) var(--radius-lg) 0 0; width: 100%; max-width: 600px; max-height: 70vh; overflow-y: auto; padding: 24px; animation: slideUp 0.3s ease; }
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.wishlist-panel h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.wishlist-panel .close-btn { margin-left: auto; background: var(--bg-elevated); border: none; color: var(--text-secondary); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
+.wishlist-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.wishlist-item:last-child { border-bottom: none; }
+.wishlist-item .wi-info { flex: 1; }
+.wishlist-item .wi-name { font-size: 14px; font-weight: 600; }
+.wishlist-item .wi-loc { font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); }
+.wishlist-item .wi-remove { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 18px; padding: 4px; }
+.wishlist-item .wi-remove:hover { color: var(--heart-color); }
+.wishlist-empty { color: var(--text-muted); font-size: 14px; text-align: center; padding: 32px 0; }
+.cat-amusements { background: rgba(245, 158, 11, 0.12); color: var(--cat-amusements); }
+.cat-escape { background: rgba(16, 185, 129, 0.12); color: var(--cat-escape); }
+.cat-events { background: rgba(139, 92, 246, 0.12); color: var(--cat-events); }
+.cat-exhibits { background: rgba(6, 182, 212, 0.12); color: var(--cat-exhibits); }
+.cat-experiences { background: rgba(167, 139, 250, 0.12); color: var(--cat-experiences); }
+.cat-food { background: rgba(249, 115, 22, 0.12); color: var(--cat-food); }
+.cat-games { background: rgba(34, 211, 238, 0.12); color: var(--cat-games); }
+.cat-haunts { background: rgba(239, 68, 68, 0.12); color: var(--cat-haunts); }
+.cat-shows { background: rgba(236, 72, 153, 0.12); color: var(--cat-shows); }
+.cat-multiday { background: rgba(99, 102, 241, 0.12); color: var(--cat-multiday); }
+.cat-themepark { background: rgba(20, 184, 166, 0.12); color: var(--cat-themepark); }
+.cat-vr { background: rgba(59, 130, 246, 0.12); color: var(--cat-vr); }
+.cat-oneone { background: rgba(217, 70, 239, 0.12); color: var(--cat-oneone); }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+.card { animation: fadeIn 0.3s ease both; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 640px) { .sort-btns { gap: 3px; } .sort-btn { padding: 0 10px; font-size: 12px; height: 42px; } .search-box input { height: 42px; font-size: 14px; } .card { padding: 14px; } .card-grid { gap: 10px; } .section-header { padding: 12px 0 10px; } }
+</style>
 </head>
 <body>
-<div>
-<h1>✦ Certified Immersive</h1>
-<p>The full index.html (44KB) needs to be pushed via git CLI.<br>
-Download it from Claude, then:</p>
-<p><code>git clone https://github.com/imbrettjackson/certified-immersive.git<br>
-cp ~/Downloads/index.html certified-immersive/<br>
-cd certified-immersive && git add . && git commit -m "full site" && git push</code></p>
+<div class="ambient"></div>
+<div class="container">
+  <header>
+    <div class="logo-mark"><div class="logo-icon">&#10022;</div></div>
+    <h1>Certified Immersive</h1>
+    <p class="subtitle">the curated directory of immersive attractions &amp; experiences</p>
+    <p class="meta-line">30 experiences &middot; updated mar 19, 2026</p>
+  </header>
 </div>
+<div class="search-wrap" id="searchWrap">
+  <div class="search-inner">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="searchInput" placeholder="search experiences, locations, genres..." autocomplete="off" spellcheck="false">
+      <button class="search-clear" id="searchClear" onclick="clearSearch()">&#215;</button>
+    </div>
+    <div class="sort-btns">
+      <button class="sort-btn active" data-sort="rating" onclick="setSort('rating')">&#9733; top</button>
+      <button class="sort-btn" data-sort="recent" onclick="setSort('recent')">&#128336; new</button>
+      <button class="sort-btn" data-sort="name" onclick="setSort('name')">A&#8594;Z</button>
+    </div>
+  </div>
+</div>
+<div class="tag-bar"><div class="tag-bar-inner"><div class="tag-scroll" id="tagScroll">
+  <button class="clear-filters" id="clearFilters" onclick="clearAllFilters()">&#10005; clear</button>
+</div></div></div>
+<div class="container">
+  <div class="stats-bar">
+    <span class="count" id="resultCount">30 experiences</span>
+    <span class="wishlist-count" id="wishlistToggle" onclick="openWishlist()">&#9829; 0 wishlisted</span>
+  </div>
+  <div id="content"></div>
+  <div class="empty-state" id="emptyState" style="display:none"><div class="icon">&#128269;</div><p>no experiences match your filters</p></div>
+</div>
+<footer>
+  <p>certified immersive &middot; a directory by <a href="https://liveactionattractions.com">live action attractions llc</a></p>
+  <p style="margin-top:6px">data is community-curated &middot; <a href="#">submit an experience</a> &middot; <a href="#">about</a></p>
+</footer>
+<div class="wishlist-overlay" id="wishlistOverlay" onclick="closeWishlistOutside(event)">
+  <div class="wishlist-panel" id="wishlistPanel">
+    <h2>&#9829; wishlist <button class="close-btn" onclick="closeWishlist()">&#215;</button></h2>
+    <div id="wishlistContent"></div>
+  </div>
+</div>
+<script>
+const experiences = [
+  {id:"sleep-no-more",name:"Sleep No More",url:"https://mckittrickhotel.com/sleep-no-more/",description:"Wordless retelling of Macbeth across a six-floor Chelsea warehouse \u2014 the one that started it all",tags:["immersive-theater","new-york","horror","classic","21+"],categories:["experiences","shows"],location:{city:"New York",state:"NY",country:"US"},rating:4.6,status:"active",operationalSince:"2011-03-07",priceRange:"$$$",publisher:"Punchdrunk / Emursive",intensity:"moderate"},
+  {id:"meow-wolf-omega-mart",name:"Meow Wolf: Omega Mart",url:"https://meowwolf.com/visit/las-vegas",description:"Psychedelic supermarket concealing interdimensional portals \u2014 permanent installation at Area15",tags:["immersive-art","las-vegas","family-friendly","sci-fi","permanent"],categories:["exhibits","experiences"],location:{city:"Las Vegas",state:"NV",country:"US"},rating:4.7,status:"active",operationalSince:"2021-02-18",priceRange:"$$",publisher:"Meow Wolf",intensity:"low"},
+  {id:"meow-wolf-hoer",name:"Meow Wolf: House of Eternal Return",url:"https://meowwolf.com/visit/santa-fe",description:"The original \u2014 a Victorian house fractured into surreal dimensions inside a former bowling alley",tags:["immersive-art","santa-fe","family-friendly","sci-fi","permanent"],categories:["exhibits","experiences"],location:{city:"Santa Fe",state:"NM",country:"US"},rating:4.8,status:"active",operationalSince:"2016-03-17",priceRange:"$$",publisher:"Meow Wolf",intensity:"low"},
+  {id:"meow-wolf-convergence",name:"Meow Wolf: Convergence Station",url:"https://meowwolf.com/visit/denver",description:"Four converging worlds accessed through quantum portals in a massive Denver installation",tags:["immersive-art","denver","family-friendly","sci-fi","permanent"],categories:["exhibits","experiences"],location:{city:"Denver",state:"CO",country:"US"},rating:4.5,status:"active",operationalSince:"2021-09-17",priceRange:"$$",publisher:"Meow Wolf",intensity:"low"},
+  {id:"void-star-wars",name:"Star Wars: Secrets of the Empire",url:"https://www.thevoid.com/",description:"Hyper-reality experience \u2014 full-body haptics VR in a galaxy far, far away",tags:["VR","franchise","sci-fi","family-friendly"],categories:["VR","experiences"],location:{city:"Various",state:"",country:"US"},rating:4.3,status:"closed",operationalSince:"2017-12-16",priceRange:"$$$",publisher:"The VOID / ILMxLAB",intensity:"moderate"},
+  {id:"epic-universe",name:"Universal Epic Universe",url:"https://www.universalorlando.com/epic-universe",description:"Universal's massive new Orlando park \u2014 Dark Universe, How to Train Your Dragon, and more",tags:["theme-park","orlando","family-friendly","rides","permanent"],categories:["theme park","amusements","experiences"],location:{city:"Orlando",state:"FL",country:"US"},rating:0,status:"upcoming",operationalSince:"2025-05-22",priceRange:"$$$$",publisher:"Universal Destinations & Experiences",intensity:"varies"},
+  {id:"rise-of-resistance",name:"Star Wars: Rise of the Resistance",url:"https://disneyworld.disney.go.com/attractions/hollywood-studios/star-wars-rise-of-the-resistance/",description:"18-minute multi-system dark ride \u2014 arguably the most ambitious theme park attraction ever built",tags:["theme-park","orlando","family-friendly","franchise","sci-fi","permanent"],categories:["theme park","amusements"],location:{city:"Orlando",state:"FL",country:"US"},rating:4.9,status:"active",operationalSince:"2019-12-05",priceRange:"$$$$",publisher:"Walt Disney Imagineering",intensity:"moderate"},
+  {id:"evermore-park",name:"Evermore Park",url:"https://www.evermore.com/",description:"Year-round fantasy village with seasonal storylines, live actors, and quest-based gameplay",tags:["LARP","fantasy","family-friendly","seasonal","utah"],categories:["games","experiences","multi-day","events"],location:{city:"Pleasant Grove",state:"UT",country:"US"},rating:4.1,status:"active",operationalSince:"2018-09-29",priceRange:"$$",publisher:"Evermore Park Inc.",intensity:"low"},
+  {id:"two-bit-circus",name:"Two Bit Circus",url:"https://twobitcircus.com/",description:"Micro-amusement park \u2014 VR, escape rooms, story rooms, arcade, and craft cocktails under one roof",tags:["VR","escape-room","los-angeles","21+","games"],categories:["amusements","games","VR","escape rooms","food and drink"],location:{city:"Los Angeles",state:"CA",country:"US"},rating:4.2,status:"active",operationalSince:"2018-09-07",priceRange:"$$",publisher:"Two Bit Circus Inc.",intensity:"low"},
+  {id:"knotts-scary-farm",name:"Knott's Scary Farm",url:"https://www.knotts.com/events/scary-farm",description:"The OG Halloween event \u2014 mazes, scare zones, and shows transforming Knott's after dark since 1973",tags:["haunt","los-angeles","horror","seasonal","theme-park"],categories:["haunts","events","theme park"],location:{city:"Buena Park",state:"CA",country:"US"},rating:4.5,status:"seasonal",operationalSince:"1973-10-01",priceRange:"$$$",publisher:"Cedar Fair / Knott's Berry Farm",intensity:"high"},
+  {id:"hhn",name:"Halloween Horror Nights",url:"https://www.universalorlando.com/web/en/us/events/halloween-horror-nights",description:"Universal's flagship Halloween event \u2014 IP-driven mazes, scare zones, and the industry benchmark",tags:["haunt","orlando","horror","seasonal","franchise"],categories:["haunts","events","theme park"],location:{city:"Orlando",state:"FL",country:"US"},rating:4.7,status:"seasonal",operationalSince:"1991-10-01",priceRange:"$$$",publisher:"Universal Destinations & Experiences",intensity:"high"},
+  {id:"mckamey-manor",name:"McKamey Manor",url:"https://www.mckameymanor.com/",description:"The most extreme haunted experience in existence \u2014 requires a waiver, physical, and safe word",tags:["haunt","extreme","horror","adults-only"],categories:["haunts","one-on-one"],location:{city:"Summertown",state:"TN",country:"US"},rating:3.8,status:"active",operationalSince:"2001-01-01",priceRange:"$",publisher:"Russ McKamey",intensity:"extreme"},
+  {id:"60out",name:"60out Escape Rooms",url:"https://www.60out.com/",description:"LA's largest escape room company \u2014 20+ rooms across multiple locations with high production value",tags:["escape-room","los-angeles","puzzle","family-friendly"],categories:["escape rooms","games"],location:{city:"Los Angeles",state:"CA",country:"US"},rating:4.5,status:"active",operationalSince:"2015-01-01",priceRange:"$$",publisher:"60out Entertainment",intensity:"moderate"},
+  {id:"the-escape-game",name:"The Escape Game",url:"https://theescapegame.com/",description:"National chain known for Hollywood-level set design and consistent quality across 30+ locations",tags:["escape-room","national","family-friendly","puzzle"],categories:["escape rooms","games"],location:{city:"Nashville",state:"TN",country:"US"},rating:4.7,status:"active",operationalSince:"2014-01-01",priceRange:"$$",publisher:"The Escape Game",intensity:"moderate"},
+  {id:"teamlab-borderless",name:"teamLab Borderless",url:"https://borderless.teamlab.art/",description:"Immersive digital art museum \u2014 projections that flow between rooms and react to visitors",tags:["immersive-art","tokyo","digital","family-friendly","permanent"],categories:["exhibits","experiences"],location:{city:"Tokyo",state:"",country:"JP"},rating:4.8,status:"active",operationalSince:"2024-02-09",priceRange:"$$$",publisher:"teamLab",intensity:"low"},
+  {id:"secret-cinema",name:"Secret Cinema",url:"https://www.secretcinema.org/",description:"Theatrical film screenings inside fully realized worlds \u2014 you ARE in the movie",tags:["immersive-theater","london","film","seasonal"],categories:["shows","experiences","events"],location:{city:"London",state:"",country:"GB"},rating:4.4,status:"seasonal",operationalSince:"2007-01-01",priceRange:"$$$",publisher:"Secret Cinema / TodayTix Group",intensity:"moderate"},
+  {id:"dinner-detective",name:"The Dinner Detective",url:"https://www.thedinnerdetective.com/",description:"Murder mystery dinner theater in 100+ cities \u2014 actors hide among the guests",tags:["dinner-theater","mystery","national","comedy","21+"],categories:["food and drink","shows","games"],location:{city:"Various",state:"",country:"US"},rating:4.1,status:"active",operationalSince:"2004-01-01",priceRange:"$$$",publisher:"The Dinner Detective",intensity:"low"},
+  {id:"lost-spirits",name:"Lost Spirits Distillery",url:"https://www.lostspirits.net/",description:"Willy Wonka meets Pirates of the Caribbean \u2014 a working distillery disguised as a dark ride",tags:["immersive-bar","los-angeles","21+","steampunk","permanent"],categories:["food and drink","experiences","shows"],location:{city:"Los Angeles",state:"CA",country:"US"},rating:4.8,status:"active",operationalSince:"2018-05-01",priceRange:"$$$$",publisher:"Lost Spirits",intensity:"moderate"},
+  {id:"burnt-city",name:"The Burnt City",url:"https://www.punchdrunk.com/the-burnt-city/",description:"Punchdrunk's post-Sleep No More epic \u2014 the fall of Troy across two vast warehouse spaces in London",tags:["immersive-theater","london","historical","classic"],categories:["shows","experiences"],location:{city:"London",state:"",country:"GB"},rating:4.5,status:"closed",operationalSince:"2022-03-22",priceRange:"$$$",publisher:"Punchdrunk",intensity:"moderate"},
+  {id:"crystal-maze",name:"The Crystal Maze LIVE Experience",url:"https://www.the-crystal-maze.com/",description:"The cult UK game show brought to life \u2014 teams tackle physical, mental, mystery, and skill challenges",tags:["game-show","london","team-building","family-friendly"],categories:["games","experiences","amusements"],location:{city:"London",state:"",country:"GB"},rating:4.6,status:"active",operationalSince:"2016-03-15",priceRange:"$$$",publisher:"Little Lion Entertainment",intensity:"moderate"},
+  {id:"dreamscape",name:"Dreamscape Immersive",url:"https://dreamscapeimmersive.com/",description:"Free-roam VR with physical props you can touch \u2014 the body-tracking is spookily good",tags:["VR","los-angeles","sci-fi","family-friendly"],categories:["VR","experiences"],location:{city:"Los Angeles",state:"CA",country:"US"},rating:4.4,status:"active",operationalSince:"2018-12-14",priceRange:"$$$",publisher:"Dreamscape Immersive Inc.",intensity:"moderate"},
+  {id:"sandbox-vr",name:"Sandbox VR",url:"https://sandboxvr.com/",description:"Full-body motion capture VR for groups \u2014 you see your actual body in the game",tags:["VR","national","sci-fi","horror","team-building"],categories:["VR","games"],location:{city:"Various",state:"",country:"US"},rating:4.5,status:"active",operationalSince:"2017-01-01",priceRange:"$$$",publisher:"Sandbox VR",intensity:"moderate"},
+  {id:"delusion",name:"Delusion",url:"https://enterdelusion.com/",description:"LA's legendary interactive horror theater \u2014 intimate, physical, and genuinely terrifying",tags:["immersive-theater","los-angeles","horror","seasonal","extreme"],categories:["shows","haunts","one-on-one"],location:{city:"Los Angeles",state:"CA",country:"US"},rating:4.9,status:"seasonal",operationalSince:"2011-10-01",priceRange:"$$$",publisher:"Jon Braver / Just Fix It Productions",intensity:"high"},
+  {id:"area15",name:"AREA15",url:"https://area15.com/",description:"Immersive entertainment district \u2014 Omega Mart, Wink World, Museum Fiasco, axe throwing, and more",tags:["entertainment-district","las-vegas","family-friendly","permanent"],categories:["amusements","experiences","food and drink","exhibits"],location:{city:"Las Vegas",state:"NV",country:"US"},rating:4.4,status:"active",operationalSince:"2020-09-17",priceRange:"$$",publisher:"AREA15",intensity:"low"},
+  {id:"immersive-gatsby",name:"The Great Gatsby Immersive",url:"https://immersivegatsby.com/",description:"1920s party at Jay Gatsby's mansion \u2014 cocktails, dancing, and a murder mystery woven through",tags:["immersive-theater","london","new-york","historical","21+"],categories:["shows","food and drink","experiences"],location:{city:"London",state:"",country:"GB"},rating:4.3,status:"active",operationalSince:"2019-12-01",priceRange:"$$$",publisher:"The Guild of Misrule",intensity:"low"},
+  {id:"museum-ice-cream",name:"Museum of Ice Cream",url:"https://www.museumoficecream.com/",description:"Instagram-friendly experiential museum \u2014 the sprinkle pool heard 'round the world",tags:["pop-up","national","family-friendly","food"],categories:["exhibits","food and drink","experiences"],location:{city:"Various",state:"",country:"US"},rating:3.7,status:"active",operationalSince:"2016-07-29",priceRange:"$$",publisher:"Museum of Ice Cream",intensity:"low"},
+  {id:"13th-floor-denver",name:"13th Floor Haunted House Denver",url:"https://13thfloorhauntedhouse.com/denver/",description:"Multi-attraction haunt complex \u2014 high production value, extreme upgrades available",tags:["haunt","denver","horror","seasonal","extreme"],categories:["haunts","events"],location:{city:"Denver",state:"CO",country:"US"},rating:4.4,status:"seasonal",operationalSince:"2005-10-01",priceRange:"$$",publisher:"Thirteenth Floor Entertainment Group",intensity:"high"},
+  {id:"the-nest",name:"The Nest",url:"https://www.intothenest.com/",description:"Two-person immersive puzzle experience \u2014 intimate, narrative-driven, reservation only",tags:["escape-room","los-angeles","puzzle","intimate"],categories:["one-on-one","escape rooms","games"],location:{city:"Los Angeles",state:"CA",country:"US"},rating:4.9,status:"active",operationalSince:"2019-01-01",priceRange:"$$$",publisher:"Into The Nest",intensity:"moderate"},
+  {id:"life-rockstar",name:"Life Of A Rock Star",url:"https://lifeofarockstar.com/",description:"Multi-day immersive where you become a rock star \u2014 recording sessions, concerts, and a tour bus",tags:["multi-day","los-angeles","music","adults-only","luxury"],categories:["multi-day","experiences","one-on-one"],location:{city:"Los Angeles",state:"CA",country:"US"},rating:4.8,status:"seasonal",operationalSince:"2019-01-01",priceRange:"$$$$",publisher:"Life Of A Rock Star",intensity:"moderate"},
+  {id:"no-sleep-hotel",name:"No Sleep Hotel",url:"https://nosleephotel.com/",description:"Overnight immersive horror \u2014 check in and survive till morning in a haunted hotel",tags:["haunt","multi-day","horror","extreme","adults-only"],categories:["multi-day","haunts","one-on-one"],location:{city:"Various",state:"",country:"US"},rating:4.2,status:"seasonal",operationalSince:"2023-10-01",priceRange:"$$$$",publisher:"No Sleep Hotel",intensity:"extreme"}
+];
+const CATEGORIES={"amusements":{icon:"\ud83c\udfaa",color:"cat-amusements",label:"Amusements"},"escape rooms":{icon:"\ud83d\udd10",color:"cat-escape",label:"Escape Rooms"},"events":{icon:"\ud83c\udfad",color:"cat-events",label:"Events"},"exhibits":{icon:"\ud83d\uddbc",color:"cat-exhibits",label:"Exhibits"},"experiences":{icon:"\u2726",color:"cat-experiences",label:"Experiences"},"food and drink":{icon:"\ud83c\udf78",color:"cat-food",label:"Food & Drink"},"games":{icon:"\ud83c\udfae",color:"cat-games",label:"Games"},"haunts":{icon:"\ud83d\udc7b",color:"cat-haunts",label:"Haunts"},"shows":{icon:"\ud83c\udfac",color:"cat-shows",label:"Shows"},"multi-day":{icon:"\ud83c\udf19",color:"cat-multiday",label:"Multi-Day"},"theme park":{icon:"\ud83c\udfa2",color:"cat-themepark",label:"Theme Park"},"VR":{icon:"\ud83e\udd7d",color:"cat-vr",label:"VR"},"one-on-one":{icon:"\ud83c\udfaf",color:"cat-oneone",label:"One-on-One"}};
+const STATUSES=["active","seasonal","upcoming","closed"];
+let currentSort="rating",activeCategories=new Set(),activeStatuses=new Set(),searchQuery="",wishlist=new Set(JSON.parse(localStorage.getItem("ci-wishlist")||"[]"));
+function init(){buildTagBar();render();bindSearch();bindScroll();updateWishlistCount()}
+function buildTagBar(){const s=document.getElementById("tagScroll"),c=document.getElementById("clearFilters");for(const[k,v]of Object.entries(CATEGORIES)){const p=document.createElement("button");p.className="tag-pill category";p.textContent=v.icon+" "+v.label;p.dataset.cat=k;p.onclick=()=>toggleCategory(k,p);s.insertBefore(p,c)}const sep=document.createElement("span");sep.style.cssText="width:1px;height:24px;background:var(--border);flex-shrink:0;margin:0 4px";s.insertBefore(sep,c);for(const st of STATUSES){const p=document.createElement("button");p.className="tag-pill status";p.textContent=st;p.style.cssText="background:rgba(255,255,255,0.04);color:var(--status-"+st+")";p.dataset.status=st;p.onclick=()=>toggleStatus(st,p);s.insertBefore(p,c)}}
+function toggleCategory(c,p){activeCategories.has(c)?activeCategories.delete(c)&&p.classList.remove("active"):(activeCategories.add(c),p.classList.add("active"));updateClearBtn();render()}
+function toggleStatus(s,p){activeStatuses.has(s)?activeStatuses.delete(s)&&p.classList.remove("active"):(activeStatuses.add(s),p.classList.add("active"));updateClearBtn();render()}
+function clearAllFilters(){activeCategories.clear();activeStatuses.clear();searchQuery="";document.getElementById("searchInput").value="";document.getElementById("searchClear").classList.remove("visible");document.querySelectorAll(".tag-pill.active").forEach(p=>p.classList.remove("active"));updateClearBtn();render()}
+function updateClearBtn(){document.getElementById("clearFilters").classList.toggle("visible",activeCategories.size>0||activeStatuses.size>0||searchQuery)}
+function clearSearch(){searchQuery="";document.getElementById("searchInput").value="";document.getElementById("searchClear").classList.remove("visible");updateClearBtn();render()}
+function bindSearch(){const i=document.getElementById("searchInput"),c=document.getElementById("searchClear");let t;i.addEventListener("input",()=>{clearTimeout(t);t=setTimeout(()=>{searchQuery=i.value.trim().toLowerCase();c.classList.toggle("visible",searchQuery.length>0);updateClearBtn();render()},120)})}
+function bindScroll(){const w=document.getElementById("searchWrap");window.addEventListener("scroll",()=>{w.classList.toggle("scrolled",window.scrollY>80)},{passive:true})}
+function getFiltered(){let items=[...experiences];if(searchQuery){const q=searchQuery;items=items.filter(e=>e.name.toLowerCase().includes(q)||e.description.toLowerCase().includes(q)||e.tags.some(t=>t.toLowerCase().includes(q))||e.location.city.toLowerCase().includes(q)||e.location.state.toLowerCase().includes(q)||e.publisher.toLowerCase().includes(q)||e.categories.some(c=>c.toLowerCase().includes(q)))}if(activeCategories.size>0)items=items.filter(e=>e.categories.some(c=>activeCategories.has(c)));if(activeStatuses.size>0)items=items.filter(e=>activeStatuses.has(e.status));if(currentSort==="rating")items.sort((a,b)=>b.rating-a.rating);else if(currentSort==="recent")items.sort((a,b)=>new Date(b.operationalSince)-new Date(a.operationalSince));else if(currentSort==="name")items.sort((a,b)=>a.name.localeCompare(b.name));return items}
+function setSort(s){currentSort=s;document.querySelectorAll(".sort-btn").forEach(b=>{b.classList.toggle("active",b.dataset.sort===s)});render()}
+function render(){const filtered=getFiltered(),content=document.getElementById("content"),empty=document.getElementById("emptyState");document.getElementById("resultCount").textContent=filtered.length+" experience"+(filtered.length!==1?"s":"");if(filtered.length===0){content.innerHTML="";empty.style.display="block";return}empty.style.display="none";if(activeCategories.size===0&&!searchQuery){const grouped={};for(const cat of Object.keys(CATEGORIES)){const ci=filtered.filter(e=>e.categories.includes(cat));if(ci.length>0){const ui=ci.filter(e=>{const fc=e.categories.find(c=>CATEGORIES[c]);return fc===cat});if(ui.length>0)grouped[cat]=ui}}let html="";for(const[cat,items]of Object.entries(grouped)){const cfg=CATEGORIES[cat];html+='<div class="section"><div class="section-header"><div class="section-icon" style="background:rgba(255,255,255,0.04)">'+cfg.icon+'</div><div class="section-title">'+cfg.label+'</div><span class="section-count">'+items.length+'</span></div><div class="card-grid">'+items.map((e,i)=>renderCard(e,i*0.03)).join("")+'</div></div>'}content.innerHTML=html}else{content.innerHTML='<div class="card-grid">'+filtered.map((e,i)=>renderCard(e,i*0.02)).join("")+'</div>'}}
+function renderCard(exp,delay){const loc=[exp.location.city,exp.location.state].filter(Boolean).join(", ");const ih=wishlist.has(exp.id);const yr=exp.operationalSince?new Date(exp.operationalSince).getFullYear():"";const rs=exp.rating>0?'<span class="card-rating">\u2605 '+exp.rating+'</span><span class="divider">\u00b7</span>':"";const ct=exp.categories.slice(0,3).map(c=>{const cfg=CATEGORIES[c];return cfg?'<span class="card-tag '+cfg.color+'">'+cfg.label+'</span>':""}).join("");return'<div class="card" style="animation-delay:'+delay+'s"><div class="card-top"><div class="card-title"><a href="'+exp.url+'" target="_blank" rel="noopener">'+exp.name+'</a></div><button class="heart-btn '+(ih?"hearted":"")+'" onclick="toggleHeart(\''+exp.id+'\',this)" aria-label="Add to wishlist">'+(ih?"\u2665":"\u2661")+'</button></div><div class="card-desc">'+exp.description+'</div><div class="card-tags">'+ct+'</div><div class="card-meta">'+rs+'<span class="card-price">'+exp.priceRange+'</span><span class="divider">\u00b7</span><span class="card-status '+exp.status+'">'+exp.status+'</span><span class="divider">\u00b7</span><span class="card-location">\ud83d\udccd '+(loc||exp.location.country)+'</span>'+(yr?'<span class="divider">\u00b7</span><span class="card-date">since '+yr+'</span>':"")+'</div></div>'}
+function toggleHeart(id,btn){if(wishlist.has(id)){wishlist.delete(id);btn.classList.remove("hearted");btn.innerHTML="\u2661"}else{wishlist.add(id);btn.classList.add("hearted");btn.innerHTML="\u2665"}localStorage.setItem("ci-wishlist",JSON.stringify([...wishlist]));updateWishlistCount()}
+function updateWishlistCount(){document.getElementById("wishlistToggle").textContent="\u2665 "+wishlist.size+" wishlisted"}
+function openWishlist(){const o=document.getElementById("wishlistOverlay"),c=document.getElementById("wishlistContent");if(wishlist.size===0){c.innerHTML='<div class="wishlist-empty">tap \u2661 on any experience to add it here</div>'}else{const items=experiences.filter(e=>wishlist.has(e.id));c.innerHTML=items.map(e=>{const loc=[e.location.city,e.location.state].filter(Boolean).join(", ");return'<div class="wishlist-item"><div class="wi-info"><div class="wi-name">'+e.name+'</div><div class="wi-loc">\ud83d\udccd '+(loc||e.location.country)+' \u00b7 '+e.priceRange+'</div></div><button class="wi-remove" onclick="removeFromWishlist(\''+e.id+'\')">&times;</button></div>'}).join("")}o.classList.add("open");document.body.style.overflow="hidden"}
+function closeWishlist(){document.getElementById("wishlistOverlay").classList.remove("open");document.body.style.overflow=""}
+function closeWishlistOutside(e){if(e.target===document.getElementById("wishlistOverlay"))closeWishlist()}
+function removeFromWishlist(id){wishlist.delete(id);localStorage.setItem("ci-wishlist",JSON.stringify([...wishlist]));updateWishlistCount();render();openWishlist()}
+init();
+</script>
 </body>
 </html>
